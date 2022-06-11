@@ -2,4 +2,9 @@
     <string name="app_name">TodoApplication</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_empty">Task must not be empty!!!</string>
+    <string name="submit">Submit</string>
+    <string name="complete">Complete</string>
+    <string name="incomplete">Incomplete</string>
+    <string name="hint_edit">TODO Task</string>
 </resources>

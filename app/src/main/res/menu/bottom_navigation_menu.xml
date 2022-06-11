@@ -3,9 +3,9 @@
     <item
         android:id="@+id/todoFragment"
         android:icon="@drawable/ic_home"
-        android:title="Todo" />
+        android:title="Complete" />
     <item
         android:id="@+id/blankFragment"
         android:icon="@drawable/ic_menu_share"
-        android:title="Todo2" />
+        android:title="Incomplete" />
 </menu>

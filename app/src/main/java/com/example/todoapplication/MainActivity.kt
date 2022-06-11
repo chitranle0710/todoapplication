@@ -1,12 +1,14 @@
 package com.example.todoapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.todoapplication.base.BaseActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : BaseActivity() {
     private var bottomNavigation: BottomNavigationView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -27,7 +27,7 @@ class DialogLoading(context: Context) : Dialog(context, R.style.Theme_Dialog) {
     fun showDialog() {
         if (isShowing) return
         show()
-        Handler(Looper.getMainLooper()).postDelayed({ dismiss() }, 10000)
+        Handler(Looper.getMainLooper()).postDelayed({ dismiss() }, 5000)
     }
 
     fun closeDialog() {
