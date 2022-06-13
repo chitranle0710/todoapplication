@@ -23,7 +23,7 @@ abstract class BaseFragment : Fragment() {
         if (dialogLoading.isShowing) dialogLoading.closeDialog()
     }
 
-    fun progressBar(isShow: Boolean) {
+    fun loading(isShow: Boolean) {
         if (!isShow) progressBarView() else dismissProgressBar()
     }
 

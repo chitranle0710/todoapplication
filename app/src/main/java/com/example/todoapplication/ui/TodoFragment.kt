@@ -1,16 +1,12 @@
 package com.example.todoapplication.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todoapplication.MainActivity
 import com.example.todoapplication.R
 import com.example.todoapplication.base.BaseFragment
 import com.example.todoapplication.databinding.FragmentTodoBinding
@@ -21,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TodoFragment : BaseFragment() {
-    private val viewModel: TaskViewModel by viewModels()
+    private val viewModel: TaskViewModel by activityViewModels()
     private var binding: FragmentTodoBinding? = null
     private var isComplete: Boolean = false
     private var adapter: TaskAdapter? = null
@@ -32,27 +28,26 @@ class TodoFragment : BaseFragment() {
     ): View {
         binding = FragmentTodoBinding.inflate(layoutInflater)
 
-        binding?.btSubmit?.setOnClickListener {
-            insertTask()
-        }
         initRecyclerView()
         registerObserver()
-        Log.d("ToDoFragment", "ToDoFragment OnCreateView")
+        onClick()
+
         return binding!!.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("ToDoFragment", "ToDoFragment onStart")
+    private fun onClick() {
+        binding?.btSubmit?.setOnClickListener {
+            doOnSubmit()
+        }
     }
 
     private fun registerObserver() {
-        viewModel.fetchData()
-        viewModel.isLoading.observe(this) {
-            progressBar(it)
+        viewModel.isLoading.observe(requireActivity()) {
+            loading(it)
         }
-        viewModel.taskLiveData.observe(this) {
-            adapter?.updateData(it.toMutableList())
+        viewModel.taskDoneLiveData.observe(requireActivity()) { listTask ->
+            val newList = listTask.filter { it.isDone }
+            adapter?.updateData(newList.toMutableList())
         }
     }
 
@@ -64,7 +59,7 @@ class TodoFragment : BaseFragment() {
         binding?.rvTask?.adapter = adapter
     }
 
-    private fun insertTask() {
+    private fun doOnSubmit() {
         if (binding?.etTask?.text.toString().isEmpty()) {
             binding?.tvError?.isVisible = true
             binding?.tvError?.text = requireContext().resources.getString(R.string.error_empty)
@@ -81,4 +76,5 @@ class TodoFragment : BaseFragment() {
         binding?.tvError?.isVisible = false
         viewModel.insertTask(Task(null, binding?.etTask?.text.toString(), isComplete))
     }
+
 }

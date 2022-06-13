@@ -1,28 +1,53 @@
 package com.example.todoapplication
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.*
 import com.example.todoapplication.base.BaseActivity
+import com.example.todoapplication.databinding.ActivityMainBinding
+import com.example.todoapplication.ui.TodoFragment
+import com.example.todoapplication.viewModel.TaskViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
-    private var bottomNavigation: BottomNavigationView? = null
+    private val viewModel: TaskViewModel by viewModels()
+
+    private lateinit var viewBinding: ActivityMainBinding
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        bottomNavigation = findViewById(R.id.bottom_navigation)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
         initNavigation()
+        registerObserver()
     }
 
     private fun initNavigation() {
-        val navHostFragment =
+        navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        NavigationUI.setupWithNavController(bottomNavigation!!, navController)
-        // id in menu bottom navigation is the same as id of fragment in nav graph
+        navController = navHostFragment.navController
+        viewBinding.bottomNavigation.setupWithNavController(navController)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.todoFragment2, R.id.blankFragment2))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun registerObserver() {
+        viewModel.fetchData()
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration)
     }
 }
