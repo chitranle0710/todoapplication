@@ -1,17 +1,11 @@
 package com.example.todoapplication.base
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.todoapplication.DialogLoading
-
 
 abstract class BaseFragment : Fragment() {
     private val dialogLoading by lazy {
         DialogLoading(requireContext())
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     private fun progressBarView() {

@@ -6,7 +6,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class InsertTaskUseCaseImpl @Inject constructor(private val repositoryImpl: TaskRepositoryImpl) :
-    InsertTaskUseCase {
-    override suspend fun insertTask(task: Task) = repositoryImpl.insertTask(task)
+class UpdateStatusUseCaseImpl @Inject constructor(private val repositoryImpl: TaskRepositoryImpl) :
+    UpdateStatusUseCase {
+    override suspend fun updateStatus(task: Task) =
+        repositoryImpl.updateStatus(task)
 }

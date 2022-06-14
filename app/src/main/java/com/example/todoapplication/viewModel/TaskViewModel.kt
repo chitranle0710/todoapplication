@@ -1,43 +1,50 @@
 package com.example.todoapplication.viewModel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.todoapplication.base.BaseViewModel
 import com.example.todoapplication.model.Task
 import com.example.todoapplication.usecase.FetchTaskUseCase
 import com.example.todoapplication.usecase.InsertTaskUseCase
+import com.example.todoapplication.usecase.UpdateStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TaskViewModel @Inject constructor(
-    private val useCase: InsertTaskUseCase,
-    private val fetchTaskUseCase: FetchTaskUseCase
+    private val insertUseCase: InsertTaskUseCase,
+    private val fetchTaskUseCase: FetchTaskUseCase,
+    private val updateStatusUseCase: UpdateStatusUseCase,
 ) : BaseViewModel() {
     val taskDoneLiveData = MutableLiveData<List<Task>>()
-    val isLoading = MutableLiveData<Boolean>()
+    val isLoading = MutableLiveData(true)
+
     fun insertTask(task: Task) {
-        localScope.launch {
-            isLoading.postValue(true)
-            useCase.insertTask(task)
-            fetchData()
+        viewModelScope.launch {
             isLoading.postValue(false)
+            insertUseCase.insertTask(task)
+            fetchData()
+            isLoading.postValue(true)
         }
     }
 
     fun fetchData() {
-        localScope.launch {
-            isLoading.postValue(true)
+        viewModelScope.launch {
+            isLoading.postValue(false)
             val result = fetchTaskUseCase.fetchTask()
             taskDoneLiveData.postValue(result)
-            isLoading.postValue(false)
+            isLoading.postValue(true)
         }
     }
+
+    fun updateStatus(task: Task) {
+        viewModelScope.launch {
+            isLoading.postValue(false)
+            updateStatusUseCase.updateStatus(task)
+            isLoading.postValue(true)
+            fetchData()
+        }
+    }
+
 }

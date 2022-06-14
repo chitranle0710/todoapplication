@@ -1,17 +1,11 @@
 package com.example.todoapplication.base
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todoapplication.DialogLoading
 
 abstract class BaseActivity : AppCompatActivity() {
     private val dialogLoading by lazy {
         DialogLoading(this)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
 
     private fun progressBarView() {

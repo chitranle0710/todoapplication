@@ -10,7 +10,7 @@ import com.example.todoapplication.model.Task
 
 class TaskAdapter(private var listTask: MutableList<Task>) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
-    private var onClick: (task: Task) -> Unit = {}
+    var onClick: (task: Task) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(

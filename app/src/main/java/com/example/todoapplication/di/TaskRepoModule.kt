@@ -1,11 +1,9 @@
 package com.example.todoapplication.di
 
+import androidx.room.Update
 import com.example.todoapplication.repository.TaskRepository
 import com.example.todoapplication.repository.TaskRepositoryImpl
-import com.example.todoapplication.usecase.FetchTaskUseCase
-import com.example.todoapplication.usecase.FetchTaskUseCaseImpl
-import com.example.todoapplication.usecase.InsertTaskUseCase
-import com.example.todoapplication.usecase.InsertTaskUseCaseImpl
+import com.example.todoapplication.usecase.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +20,7 @@ interface TaskRepoModule {
 
     @Binds
     fun provideUseCaseFetchData(useCaseFetchImpl: FetchTaskUseCaseImpl): FetchTaskUseCase
+
+    @Binds
+    fun provideUpdateStatus(updateStatusUseCaseImpl: UpdateStatusUseCaseImpl): UpdateStatusUseCase
 }

@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/incomplete"
-    app:startDestination="@id/blankFragment2">
+    app:startDestination="@id/updateFragment2">
 
     <fragment
-        android:id="@+id/blankFragment2"
-        android:name="com.example.todoapplication.ui.BlankFragment"
-        android:label="BlankFragment"
-        tools:layout="@layout/fragment_blank" />
+        android:id="@+id/updateFragment2"
+        android:name="com.example.todoapplication.ui.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" />
 </navigation>

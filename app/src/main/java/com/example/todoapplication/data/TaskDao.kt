@@ -6,18 +6,21 @@ import com.example.todoapplication.model.Task
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTask(vararg task: Task)
+    suspend fun insertTask(vararg task: Task)
 
     @Update
-    fun updateTask(task: Task)
+    suspend fun updateTask(task: Task)
 
     @Delete
-    fun deleteTask(task: Task)
+    suspend fun deleteTask(task: Task)
 
     @Query("delete from task_table")
-    fun deleteAll()
+    suspend fun deleteAll()
+
+    @Update
+    suspend fun updateStatus(task: Task)
 
     @Query("select * from task_table")
-    fun fetchTasks(): List<Task>
+    suspend fun fetchTasks(): List<Task>
 
 }

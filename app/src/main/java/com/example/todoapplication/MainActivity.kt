@@ -38,12 +38,15 @@ class MainActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         viewBinding.bottomNavigation.setupWithNavController(navController)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.todoFragment2, R.id.blankFragment2))
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.todoFragment2, R.id.updateFragment2))
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     private fun registerObserver() {
         viewModel.fetchData()
+        viewModel.isLoading.observe(this) {
+            progressBar(it)
+        }
     }
 
 

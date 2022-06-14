@@ -1,6 +1,7 @@
 package com.example.todoapplication.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,12 +43,12 @@ class TodoFragment : BaseFragment() {
     }
 
     private fun registerObserver() {
-        viewModel.isLoading.observe(requireActivity()) {
-            loading(it)
-        }
         viewModel.taskDoneLiveData.observe(requireActivity()) { listTask ->
             val newList = listTask.filter { it.isDone }
             adapter?.updateData(newList.toMutableList())
+        }
+        viewModel.isLoading.observe(requireActivity()) {
+            loading(it)
         }
     }
 
@@ -57,6 +58,29 @@ class TodoFragment : BaseFragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding?.rvTask?.setHasFixedSize(true)
         binding?.rvTask?.adapter = adapter
+        adapter?.onClick = { task ->
+            binding?.btSubmit?.text = getString(R.string.update)
+            binding?.etTask?.setText(task.taskName)
+            if (task.isDone) binding?.rdCom?.isChecked else binding?.rdIncom?.isChecked
+            isComplete = when (binding?.rgTask?.checkedRadioButtonId) {
+                binding?.rdCom?.id -> {
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+            binding?.btSubmit?.setOnClickListener {
+                binding?.btSubmit?.text = getString(R.string.submit)
+                viewModel.updateStatus(
+                    Task(
+                        id = task.id,
+                        binding?.etTask?.text.toString(),
+                        isComplete
+                    )
+                )
+            }
+        }
     }
 
     private fun doOnSubmit() {
@@ -75,6 +99,7 @@ class TodoFragment : BaseFragment() {
         }
         binding?.tvError?.isVisible = false
         viewModel.insertTask(Task(null, binding?.etTask?.text.toString(), isComplete))
+        binding?.etTask?.setText("")
     }
 
 }
