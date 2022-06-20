@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/fragment_todo.xml" value="0.11" />
         <entry key="app/src/main/res/layout/fragment_update.xml" value="0.125" />
         <entry key="app/src/main/res/layout/item_task.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/layout_dialog_update.xml" value="0.13425925925925927" />
         <entry key="app/src/main/res/layout/progress_bar.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.35260416666666666" />
       </map>

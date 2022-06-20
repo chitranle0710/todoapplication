@@ -1,7 +1,7 @@
 package com.example.todoapplication.base
 
 import androidx.fragment.app.Fragment
-import com.example.todoapplication.DialogLoading
+import com.example.todoapplication.utils.DialogLoading
 
 abstract class BaseFragment : Fragment() {
     private val dialogLoading by lazy {

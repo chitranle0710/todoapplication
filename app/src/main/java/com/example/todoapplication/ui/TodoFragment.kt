@@ -13,6 +13,7 @@ import com.example.todoapplication.base.BaseFragment
 import com.example.todoapplication.databinding.FragmentTodoBinding
 import com.example.todoapplication.model.Task
 import com.example.todoapplication.ui.adapter.TaskAdapter
+import com.example.todoapplication.utils.DialogUpdate
 import com.example.todoapplication.viewModel.TaskViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,27 +61,22 @@ class TodoFragment : BaseFragment() {
         binding?.rvTask?.adapter = adapter
         adapter?.onClick = { task ->
             binding?.btSubmit?.text = getString(R.string.update)
-            binding?.etTask?.setText(task.taskName)
-            if (task.isDone) binding?.rdCom?.isChecked else binding?.rdIncom?.isChecked
-            isComplete = when (binding?.rgTask?.checkedRadioButtonId) {
-                binding?.rdCom?.id -> {
-                    true
-                }
-                else -> {
-                    false
-                }
-            }
-            binding?.btSubmit?.setOnClickListener {
-                binding?.btSubmit?.text = getString(R.string.submit)
-                viewModel.updateStatus(
-                    Task(
-                        id = task.id,
-                        binding?.etTask?.text.toString(),
-                        isComplete
-                    )
-                )
-            }
+            initDialog(task)
         }
+    }
+
+    private fun initDialog(task: Task) {
+        val dialog = DialogUpdate(requireContext())
+        dialog.onClickDialog = { isComplete, nameTask ->
+            viewModel.updateStatus(
+                Task(
+                    id = task.id,
+                    nameTask,
+                    isComplete
+                )
+            )
+        }
+        dialog.show()
     }
 
     private fun doOnSubmit() {

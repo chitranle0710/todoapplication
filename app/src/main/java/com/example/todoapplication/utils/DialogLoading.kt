@@ -1,4 +1,4 @@
-package com.example.todoapplication
+package com.example.todoapplication.utils
 
 import android.app.Dialog
 import android.content.Context
@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.todoapplication.R
 
 class DialogLoading(context: Context) : Dialog(context, R.style.Theme_Dialog) {
 

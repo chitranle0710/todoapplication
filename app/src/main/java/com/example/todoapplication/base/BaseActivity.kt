@@ -1,7 +1,7 @@
 package com.example.todoapplication.base
 
 import androidx.appcompat.app.AppCompatActivity
-import com.example.todoapplication.DialogLoading
+import com.example.todoapplication.utils.DialogLoading
 
 abstract class BaseActivity : AppCompatActivity() {
     private val dialogLoading by lazy {
