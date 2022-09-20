@@ -1,0 +1,1 @@
+/Users/macintoshhd/AndroidStudioProjects/TodoApplication/buildSrc/build/classes/kotlin/main/Configuration.class

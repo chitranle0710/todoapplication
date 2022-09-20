@@ -31,12 +31,14 @@ class UpdateFragment : BaseFragment() {
     }
 
     private fun registerObserver() {
-        viewModel.taskDoneLiveData.observe(requireActivity()) { listTask ->
-            val newList = listTask.filter { !it.isDone }
-            adapter?.updateData(newList.toMutableList())
-        }
-        viewModel.isLoading.observe(requireActivity()) {
-            loading(it)
+        with(viewModel) {
+            taskDoneLiveData.observe(requireActivity()) { listTask ->
+                val newList = listTask.filter { !it.isDone }
+                adapter?.updateData(newList.toMutableList())
+            }
+            isLoading.observe(requireActivity()) {
+                loading(it)
+            }
         }
     }
 
